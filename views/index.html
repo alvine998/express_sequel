@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>API Display</title>
+    </head>
+    <body>
+        <script>
+            // function displayData(data) {
+            //     const datas = data.data[]
+            // }
+            fetch("http://localhost:8080/api/tutorial", {mode:"cors"}).then(
+                (response) => {
+                    if(response.ok){
+                        return response.json();
+                    } else {
+                        throw new Error("NETWORK RESPONSE ERROR");
+                    }
+                }
+            )
+            .then(data => {
+                console.log(data);
+            })
+        </script>
+        
+    </body>
+</html>

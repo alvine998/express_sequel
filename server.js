@@ -1,10 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-var corsOption = {
-    origin:"http://localhost:8081"
-};
-app.use(cors(corsOption));
+// var corsOption = {
+//     origin:"http://localhost:8080"
+// };
+// app.use(cors(corsOption));
+
+app.use((req,res,next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next()
+})
 
 app.use(express.json());
 
@@ -16,9 +22,10 @@ app.get("/", (req,res) => {
 
 // DB Connection
 const db = require("./app/models");
-db.sequelize.sync({force: true}).then(()=>{
-    console.log("Drop and re-sync db")
-});
+db.sequelize.sync();
+
+// Define Routes
+require("./app/routes/tutorial.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
