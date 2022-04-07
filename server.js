@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const app = express();
 // var corsOption = {
 //     origin:"http://localhost:8080"
@@ -26,6 +27,13 @@ db.sequelize.sync();
 
 // Define Routes
 require("./app/routes/tutorial.routes")(app);
+require("./app/routes/image.routes")(app);
+
+// path upload
+global.__basedir = __dirname;
+
+const dirname = path.resolve();
+app.use("/resources/uploads/", express.static(path.join(dirname, "/resources/uploads/")));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
