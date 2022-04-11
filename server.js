@@ -23,11 +23,31 @@ app.get("/", (req,res) => {
 
 // DB Connection
 const db = require("./app/models");
+const Role = db.role;
 db.sequelize.sync();
+
+function initial() {
+    Role.create({
+        id:1,
+        name:"user"
+    });
+
+    Role.create({
+        id:2,
+        name:"moderator"
+    });
+
+    Role.create({
+        id:3,
+        name:"admin"
+    });
+}
 
 // Define Routes
 require("./app/routes/tutorial.routes")(app);
 require("./app/routes/image.routes")(app);
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
 
 // path upload
 global.__basedir = __dirname;
